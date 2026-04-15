@@ -1,0 +1,71 @@
+---
+- name: Install Java, Git, Node.js, curl, nginx and Docker
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Java
+      apt:
+        name: openjdk-17-jdk
+        state: present
+
+    - name: Install Git
+      apt:
+        name: git
+        state: present
+
+    - name: Install Node.js
+      apt:
+        name: nodejs
+        state: present
+
+    - name: Install npm
+      apt:
+        name: npm
+        state: present
+
+    # List style installation
+    - name: Install packages curl and nginx
+      apt:
+        name:
+          - curl
+          - nginx
+        state: present
+
+    - name: Install Docker dependencies
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+        state: present
+
+    - name: Update apt cache after adding Docker repository
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+
+    - name: Ensure Docker service is started and enabled
+      service:
+        name: docker
+        state: started
+        enabled: yes
