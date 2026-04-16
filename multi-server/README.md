@@ -26,7 +26,7 @@ Vagrant.configure("2") do |config|
     web.vm.hostname = "web"
     web.vm.network "private_network", ip: "192.168.33.10"
 
-    web.vm.provision "ansible" do |ansible|
+    web.vm.provision "ansible_local" do |ansible|
       ansible.playbook = "provisioning/site.yml"
       ansible.inventory_path = "provisioning/inventory.ini"
       ansible.limit = "web"
@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
     db.vm.hostname = "db"
     db.vm.network "private_network", ip: "192.168.33.11"
 
-    db.vm.provision "ansible" do |ansible|
+    db.vm.provision "ansible_local" do |ansible|
       ansible.playbook = "provisioning/site.yml"
       ansible.inventory_path = "provisioning/inventory.ini"
       ansible.limit = "db"

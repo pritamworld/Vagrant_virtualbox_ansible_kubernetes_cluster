@@ -149,7 +149,7 @@ Create `provisioning/install_software.yml`:
 Run:
 
 ```bash
-vagrant up
+vagrant up --provider=virtualbox
 ```
 
 What happens:
